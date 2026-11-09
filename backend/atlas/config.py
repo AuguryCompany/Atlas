@@ -38,11 +38,16 @@ class Settings:
     api_keys: dict[str, str] = field(
         default_factory=lambda: _api_keys(os.getenv("ATLAS_API_KEYS"))
     )
-    # Offline mode: never call external connectors, use bundled reference data.
+    # Offline mode: never call external connectors (live layers come back empty).
     offline: bool = field(default_factory=lambda: _bool("ATLAS_OFFLINE", False))
     firms_map_key: str | None = field(default_factory=lambda: os.getenv("FIRMS_MAP_KEY"))
     osrm_url: str = field(
         default_factory=lambda: os.getenv("OSRM_URL", "https://router.project-osrm.org")
+    )
+    overpass_url: str = field(
+        default_factory=lambda: os.getenv(
+            "OVERPASS_URL", "https://overpass-api.de/api/interpreter"
+        )
     )
     usgs_url: str = field(
         default_factory=lambda: os.getenv(

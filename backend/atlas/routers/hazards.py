@@ -6,12 +6,14 @@ from collections import OrderedDict
 from datetime import date
 from typing import Literal
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Body, Depends, HTTPException, Query
 
 from .. import datasets
 from ..config import Settings
 from ..connectors import firms, usgs
-from ..deps import bbox_param, date_range, get_settings
+from ..db import Database
+from ..deps import bbox_param, date_range, get_db, get_settings
+from ..geo import feature_collection
 from ..identity import require
 
 router = APIRouter(prefix="/api/hazards", tags=["hazards"])
@@ -31,10 +33,10 @@ async def earthquakes(
     return fc
 
 
-@router.get("/earthquakes/reference", dependencies=[Depends(require("viewer"))])
-def reference_earthquakes() -> dict:
-    """Bundled catalogue of major historical events (always available)."""
-    return datasets.load("earthquakes_reference.geojson")
+@router.get("/earthquakes/historical", dependencies=[Depends(require("viewer"))])
+def historical_earthquakes() -> dict:
+    """Bundled catalogue of major historical earthquakes (always available)."""
+    return datasets.load("earthquakes_historical.geojson")
 
 
 @router.get("/fires", dependencies=[Depends(require("viewer"))])
@@ -49,8 +51,32 @@ async def fires(
 
 
 @router.get("/floods", dependencies=[Depends(require("viewer"))])
-def floods() -> dict:
-    return datasets.load("flood_zones.geojson")
+def floods(db: Database = Depends(get_db)) -> dict:
+    """Flood hazard zones imported from an authoritative source (e.g. DSİ / AFAD maps)."""
+    zones = db.list_zones("flood")
+    return feature_collection(zones, count=len(zones))
+
+
+@router.post("/floods/import", dependencies=[Depends(require("admin"))])
+def import_floods(payload: dict = Body(...), db: Database = Depends(get_db)) -> dict:
+    """Upsert a GeoJSON FeatureCollection of (Multi)Polygon flood zones.
+
+    Each feature needs ``id``; optional ``name`` and ``level`` (high|medium|low).
+    """
+    if payload.get("type") != "FeatureCollection" or not isinstance(payload.get("features"), list):
+        raise HTTPException(422, "expected a GeoJSON FeatureCollection")
+    try:
+        n = db.upsert_zones("flood", payload["features"])
+    except (ValueError, KeyError, TypeError, IndexError) as exc:
+        raise HTTPException(422, f"invalid zone: {exc}") from exc
+    return {"imported": n}
+
+
+@router.delete("/floods/{zone_id}", dependencies=[Depends(require("admin"))])
+def delete_flood(zone_id: str, db: Database = Depends(get_db)) -> dict:
+    if not db.delete_zone("flood", zone_id):
+        raise HTTPException(404, "zone not found")
+    return {"deleted": zone_id}
 
 
 @router.get("/earthquakes/timeline", dependencies=[Depends(require("viewer"))])

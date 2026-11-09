@@ -34,13 +34,13 @@ function popupHtml(layer: string, p: Record<string, any>): string {
   const row = (k: string, v: unknown) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`;
   switch (layer) {
     case "infra-circle":
-      return `<h4>${esc(p.name)}</h4><table>${row("Type", ASSET_LABELS[p.type] ?? p.type)}${row("Province", p.province)}${row("Criticality", `${p.criticality} / 5`)}${row("Capacity", p.capacity)}${row("Status", p.status)}${row("ID", p.id)}</table>`;
+      return `<h4>${esc(p.name)}</h4><table>${row("Type", ASSET_LABELS[p.type] ?? p.type)}${row("Province", p.province)}${row("Criticality", `${p.criticality} / 5`)}${row("Capacity", p.capacity)}${row("Status", p.status)}${row("Source", p.source ?? p.extra?.source)}${row("ID", p.id)}</table>`;
     case "quakes-circle":
       return `<h4>${esc(p.title)}</h4><table>${row("Magnitude", p.mag)}${row("Depth", p.depth_km != null ? `${p.depth_km} km` : "—")}${row("Time (UTC)", p.time)}${row("Source", p.source)}</table><p class="hint">Use “Analysis → Earthquake impact” to model this event.</p>`;
     case "fires-circle":
       return `<h4>Thermal anomaly</h4><table>${row("Date", p.acq_date)}${row("FRP", p.frp != null ? `${p.frp} MW` : "—")}${row("Confidence", p.confidence)}${row("Area", p.area)}${row("Source", p.source)}</table>`;
     case "floods-fill":
-      return `<h4>${esc(p.name)}</h4><table>${row("Province", p.province)}${row("Level", p.level)}</table><p class="hint">Illustrative zone — not an official hazard map.</p>`;
+      return `<h4>${esc(p.name)}</h4><table>${row("Province", p.province)}${row("Level", p.level)}</table>${p.source ? `<p class="hint">Source: ${esc(p.source)}</p>` : ""}`;
     case "risk-fill":
       return `<h4>Risk cell ${esc(p.cell)}</h4><table>${row("Score", p.score)}${row("Class", p.class)}${row("Seismic", p.seismic)}${row("Wildfire", p.wildfire)}${row("Flood", p.flood)}${row("Exposure", p.exposure)}${row("Assets", p.assets)}</table>`;
     default:

@@ -21,7 +21,7 @@ const filters = {
   start: new Date(Date.now() - 365 * 864e5).toISOString().slice(0, 10),
   end: new Date().toISOString().slice(0, 10),
   minMag: 4.5,
-  withReference: true,
+  withHistorical: true,
   fireDays: 2,
 };
 
@@ -37,13 +37,13 @@ export default function LayersPanel({ basemapId, setBasemapId, onKeyChange }: { 
     run("Earthquakes", async () => {
       const live = await api<FC & { metadata: { source: string; count: number } }>("/hazards/earthquakes", { start: f.start, end: f.end, min_mag: f.minMag });
       let features = live.features;
-      if (f.withReference) {
-        const ref = await api<FC>("/hazards/earthquakes/reference");
+      if (f.withHistorical) {
+        const ref = await api<FC>("/hazards/earthquakes/historical");
         const seen = new Set(features.map((x) => x.id));
         features = features.concat(ref.features.filter((x) => !seen.has(x.id)));
       }
       setMapData({ quakes: { type: "FeatureCollection", features } });
-      setMeta((m) => ({ ...m, quakes: `${live.metadata.count} from ${live.metadata.source}${f.withReference ? " + historical reference" : ""}` }));
+      setMeta((m) => ({ ...m, quakes: `${live.metadata.count} from ${live.metadata.source}${f.withHistorical ? " + historical catalogue" : ""}` }));
     });
 
   const loadFires = () =>
@@ -98,8 +98,8 @@ export default function LayersPanel({ basemapId, setBasemapId, onKeyChange }: { 
           <input type="range" min={2.5} max={7} step={0.1} value={f.minMag} onChange={(e) => update({ minMag: Number(e.target.value) })} />
         </Field>
         <label className="check">
-          <input type="checkbox" checked={f.withReference} onChange={(e) => update({ withReference: e.target.checked })} />
-          Include historical reference events
+          <input type="checkbox" checked={f.withHistorical} onChange={(e) => update({ withHistorical: e.target.checked })} />
+          Include major historical earthquakes
         </label>
         {meta.quakes && <p className="muted">{meta.quakes}</p>}
       </Section>
@@ -109,6 +109,7 @@ export default function LayersPanel({ basemapId, setBasemapId, onKeyChange }: { 
           <input type="range" min={1} max={10} value={f.fireDays} onChange={(e) => update({ fireDays: Number(e.target.value) })} />
         </Field>
         {meta.fires && <p className="muted">{meta.fires}</p>}
+        {meta.fires?.includes("unavailable") && <p className="muted">Set <code>FIRMS_MAP_KEY</code> on the API to enable live NASA FIRMS detections.</p>}
       </Section>
 
       <Section title="Legend">
@@ -122,7 +123,7 @@ export default function LayersPanel({ basemapId, setBasemapId, onKeyChange }: { 
             <span key={k}><i style={{ background: v }} />Risk: {k.replace("_", " ")}</span>
           ))}
           <span><i style={{ background: "#ff9e00" }} />Live quake</span>
-          <span><i style={{ background: "#f72585" }} />Reference quake</span>
+          <span><i style={{ background: "#f72585" }} />Historical quake</span>
         </div>
       </Section>
 

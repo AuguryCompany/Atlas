@@ -1,8 +1,7 @@
 {
  "type": "FeatureCollection",
  "metadata": {
-  "dataset": "flood_zones",
-  "note": "Illustrative flood-prone areas for demonstration. Not an official hazard map."
+  "note": "Test fixture only — not shipped with the application."
  },
  "features": [
   {

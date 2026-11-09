@@ -1,4 +1,4 @@
-"""Access to bundled reference datasets."""
+"""Access to bundled datasets (historical earthquake catalogue)."""
 
 from __future__ import annotations
 

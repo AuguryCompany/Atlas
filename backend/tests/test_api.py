@@ -4,7 +4,12 @@ def test_health(client):
     assert r.json()["product"] == "Augury Atlas"
 
 
-def test_infrastructure_seeded_and_filtered(client):
+def test_inventory_starts_empty(empty_client):
+    assert empty_client.get("/api/infrastructure").json()["features"] == []
+    assert empty_client.get("/api/hazards/floods").json()["features"] == []
+
+
+def test_infrastructure_filtered(client):
     fc = client.get("/api/infrastructure").json()
     assert fc["type"] == "FeatureCollection" and len(fc["features"]) > 20
     airports = client.get("/api/infrastructure", params={"types": "airport"}).json()
@@ -29,9 +34,11 @@ def test_import_and_delete_asset(client):
 
 def test_hazard_layers_offline(client):
     eq = client.get("/api/hazards/earthquakes", params={"start": "1990-01-01", "min_mag": 6}).json()
-    assert eq["metadata"]["source"] == "reference" and eq["features"]
+    assert eq["metadata"]["source"] == "catalogue" and eq["features"]
+    assert client.get("/api/hazards/earthquakes/historical").json()["features"]
+    # No synthetic fire data: without FIRMS the layer is empty and says why.
     fires = client.get("/api/hazards/fires").json()
-    assert fires["metadata"]["source"] == "reference" and fires["features"]
+    assert fires["metadata"]["source"] == "unavailable" and fires["features"] == []
     assert client.get("/api/hazards/floods").json()["features"]
     tl = client.get("/api/hazards/earthquakes/timeline", params={"start": "1990-01-01", "bucket": "year"}).json()
     assert any(s["period"] == "2023" and s["count"] >= 2 for s in tl["series"])
@@ -42,7 +49,8 @@ def test_analysis_endpoints(client):
     r = client.post("/api/analysis/earthquake", json={"lon": 37.014, "lat": 37.226, "magnitude": 7.8})
     body = r.json()
     assert r.status_code == 200 and body["summary"]["assets_affected"] > 0
-    assert client.get("/api/analysis/wildfire").json()["hazard"] == "wildfire"
+    wf = client.get("/api/analysis/wildfire").json()
+    assert wf["hazard"] == "wildfire" and wf["source"] == "unavailable" and wf["assets"] == []
     assert client.get("/api/analysis/flood").json()["hazard"] == "flood"
     grid = client.get("/api/analysis/risk-grid", params={"cell_deg": 1}).json()
     assert grid["features"] and grid["metadata"]["top_cells"][0]["score"] > 0
@@ -88,3 +96,18 @@ def test_flood_exposure_finds_assets_in_reference_zones(client):
     body = client.get("/api/analysis/flood").json()
     names = {a["name"] for a in body["assets"]}
     assert "Adana City Hospital" in names
+
+
+def test_flood_zone_import_validation_and_delete(client):
+    bad = {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": {"type": "Point", "coordinates": [30, 40]}, "properties": {"id": "z"}}]}
+    assert client.post("/api/hazards/floods/import", json=bad).status_code == 422
+    bad_level = {"type": "FeatureCollection", "features": [{"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[30, 40], [31, 40], [31, 41], [30, 40]]]}, "properties": {"id": "z", "level": "extreme"}}]}
+    assert client.post("/api/hazards/floods/import", json=bad_level).status_code == 422
+    assert client.delete("/api/hazards/floods/FZ-CUK").status_code == 200
+    assert client.delete("/api/hazards/floods/FZ-CUK").status_code == 404
+
+
+def test_osm_import_offline_returns_502(client):
+    r = client.post("/api/infrastructure/import/osm", json={"categories": ["airport"]})
+    assert r.status_code == 502 and "offline" in r.json()["detail"]
+    assert client.get("/api/infrastructure/osm/categories").json()["airport"] == "Airport"

@@ -10,8 +10,6 @@ from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
-from . import datasets
-
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS assets (
     id          TEXT PRIMARY KEY,
@@ -28,6 +26,17 @@ CREATE TABLE IF NOT EXISTS assets (
 );
 CREATE INDEX IF NOT EXISTS idx_assets_type ON assets(type);
 CREATE INDEX IF NOT EXISTS idx_assets_lonlat ON assets(lon, lat);
+
+CREATE TABLE IF NOT EXISTS hazard_zones (
+    id          TEXT PRIMARY KEY,
+    hazard      TEXT NOT NULL,
+    name        TEXT NOT NULL,
+    level       TEXT NOT NULL,
+    geometry    TEXT NOT NULL,
+    properties  TEXT NOT NULL DEFAULT '{}',
+    updated_at  TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_zones_hazard ON hazard_zones(hazard);
 
 CREATE TABLE IF NOT EXISTS audit_log (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -80,14 +89,6 @@ class Database:
         self._conn.close()
 
     # ---- assets -------------------------------------------------------
-    def seed_if_empty(self) -> int:
-        with self.cursor() as cur:
-            count = cur.execute("SELECT COUNT(*) FROM assets").fetchone()[0]
-        if count:
-            return 0
-        fc = datasets.load("infrastructure.geojson")
-        return self.upsert_features(fc["features"])
-
     def upsert_features(self, features: list[dict]) -> int:
         rows = [feature_to_row(f) for f in features]
         with self.cursor() as cur:
@@ -116,6 +117,33 @@ class Database:
     def delete_asset(self, asset_id: str) -> bool:
         with self.cursor() as cur:
             cur.execute("DELETE FROM assets WHERE id = ?", (asset_id,))
+            return cur.rowcount > 0
+
+    def count_assets(self) -> int:
+        with self.cursor() as cur:
+            return cur.execute("SELECT COUNT(*) FROM assets").fetchone()[0]
+
+    # ---- hazard zones -------------------------------------------------
+    def upsert_zones(self, hazard: str, features: list[dict]) -> int:
+        rows = [zone_to_row(hazard, f) for f in features]
+        with self.cursor() as cur:
+            cur.executemany(
+                "INSERT OR REPLACE INTO hazard_zones (id, hazard, name, level, geometry, properties, updated_at)"
+                " VALUES (?, ?, ?, ?, ?, ?, ?)",
+                rows,
+            )
+        return len(rows)
+
+    def list_zones(self, hazard: str) -> list[dict]:
+        with self.cursor() as cur:
+            rows = cur.execute(
+                "SELECT * FROM hazard_zones WHERE hazard = ? ORDER BY name", (hazard,)
+            ).fetchall()
+        return [zone_to_feature(r) for r in rows]
+
+    def delete_zone(self, hazard: str, zone_id: str) -> bool:
+        with self.cursor() as cur:
+            cur.execute("DELETE FROM hazard_zones WHERE hazard = ? AND id = ?", (hazard, zone_id))
             return cur.rowcount > 0
 
     # ---- audit --------------------------------------------------------
@@ -181,3 +209,38 @@ def asset_to_feature(a: dict, **extra_props) -> dict:
         "geometry": {"type": "Point", "coordinates": [a["lon"], a["lat"]]},
         "properties": props,
     }
+
+
+ZONE_LEVELS = {"high", "medium", "low"}
+
+
+def zone_to_row(hazard: str, f: dict) -> tuple:
+    props = dict(f.get("properties") or {})
+    geom = f.get("geometry") or {}
+    if geom.get("type") not in {"Polygon", "MultiPolygon"}:
+        raise ValueError("hazard zones must be Polygon or MultiPolygon geometries")
+    polys = geom["coordinates"] if geom["type"] == "MultiPolygon" else [geom["coordinates"]]
+    for poly in polys:
+        for ring in poly:
+            if len(ring) < 4:
+                raise ValueError("polygon rings need at least 4 positions")
+            for lon, lat, *_ in ring:
+                if not (-180 <= lon <= 180 and -90 <= lat <= 90):
+                    raise ValueError(f"coordinates out of range: {lon},{lat}")
+    zone_id = str(props.pop("id", None) or f.get("id") or "").strip()
+    name = str(props.pop("name", "") or zone_id).strip()
+    if not zone_id:
+        raise ValueError("each zone needs an id")
+    level = str(props.pop("level", "medium")).lower()
+    if level not in ZONE_LEVELS:
+        raise ValueError(f"level must be one of {sorted(ZONE_LEVELS)}")
+    return (
+        zone_id, hazard, name, level, json.dumps(geom),
+        json.dumps(props, ensure_ascii=False), now_iso(),
+    )
+
+
+def zone_to_feature(row: sqlite3.Row) -> dict:
+    props = json.loads(row["properties"] or "{}")
+    props.update({"id": row["id"], "name": row["name"], "level": row["level"], "updated_at": row["updated_at"]})
+    return {"type": "Feature", "id": row["id"], "geometry": json.loads(row["geometry"]), "properties": props}

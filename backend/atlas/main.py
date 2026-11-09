@@ -31,7 +31,6 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     )
     app.state.settings = settings
     app.state.db = Database(settings.db_path)
-    app.state.db.seed_if_empty()
 
     app.add_middleware(AuditMiddleware)
     app.add_middleware(

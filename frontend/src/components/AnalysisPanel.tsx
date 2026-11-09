@@ -74,7 +74,7 @@ export default function AnalysisPanel() {
   return (
     <>
       <Section title="Earthquake impact">
-        <Field label="Reference / live event">
+        <Field label="Historical / live event">
           <select value="" onChange={(e) => {
             const f = events[Number(e.target.value)];
             if (!f) return;
@@ -127,6 +127,7 @@ export default function AnalysisPanel() {
           </div>
           {r.model && <p className="muted">{r.model}</p>}
           {r.source && <p className="muted">Data source: {r.source}</p>}
+          {r.hazard === "flood" && r.zones === 0 && <p className="muted">No flood zones loaded — import official zones in Inventory.</p>}
           {r.assets.length === 0 ? <p className="muted">No assets in the affected area.</p> : (
             <ul className="asset-list">
               {r.assets.map((a) => <AssetRow key={a.id} asset={a} level={levelOf(a)} detail={detailOf(a)} />)}

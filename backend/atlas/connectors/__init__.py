@@ -1,6 +1,7 @@
 """AUGURY CONNECT: adapters for external geospatial data sources.
 
-Every connector degrades gracefully: when offline mode is on, a key is missing,
-or the upstream fails, it returns bundled reference data and says so in the
-``source`` field, so the UI can label the provenance of what is on screen.
+Connectors never invent data. When offline mode is on, a key is missing or the
+upstream fails, they return an empty result (or the real historical catalogue,
+for earthquakes) and say so in the ``source`` field, so the UI always shows the
+provenance of what is on screen.
 """

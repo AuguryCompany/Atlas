@@ -1,8 +1,7 @@
 {
  "type": "FeatureCollection",
  "metadata": {
-  "dataset": "critical_infrastructure",
-  "note": "Demonstration dataset with approximate public coordinates. Replace with authoritative inventory via /api/infrastructure/import."
+  "note": "Test fixture only — not shipped with the application."
  },
  "features": [
   {

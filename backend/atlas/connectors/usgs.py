@@ -43,8 +43,8 @@ def _normalise(raw: dict) -> dict:
     return {"type": "FeatureCollection", "features": feats}
 
 
-def reference(bbox: BBox | None, start: date | None, end: date | None, min_mag: float) -> dict:
-    fc = datasets.load("earthquakes_reference.geojson")
+def historical(bbox: BBox | None, start: date | None, end: date | None, min_mag: float) -> dict:
+    fc = datasets.load("earthquakes_historical.geojson")
     out = []
     for f in fc["features"]:
         lon, lat = f["geometry"]["coordinates"][:2]
@@ -68,11 +68,11 @@ async def fetch_earthquakes(
     min_mag: float = 4.0,
     limit: int = 500,
 ) -> tuple[dict, str]:
-    """Return (FeatureCollection, source) where source is 'usgs' or 'reference'."""
+    """Return (FeatureCollection, source) where source is 'usgs' or 'catalogue'."""
     end = end or date.today()
     start = start or end - timedelta(days=365)
     if settings.offline:
-        return reference(bbox, start, end, min_mag), "reference"
+        return historical(bbox, start, end, min_mag), "catalogue"
     key = (bbox, start, end, min_mag, limit)
     if (hit := _cache.get(key)) is not None:
         return hit, "usgs"
@@ -93,7 +93,7 @@ async def fetch_earthquakes(
             resp.raise_for_status()
             fc = _normalise(resp.json())
     except (httpx.HTTPError, ValueError) as exc:
-        log.warning("USGS unavailable (%s); using reference catalogue", exc)
-        return reference(bbox, start, end, min_mag), "reference"
+        log.warning("USGS unavailable (%s); using historical catalogue", exc)
+        return historical(bbox, start, end, min_mag), "catalogue"
     _cache.set(key, fc)
     return fc, "usgs"

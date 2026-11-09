@@ -1,5 +1,7 @@
+import json
 import os
 import tempfile
+from pathlib import Path
 
 import pytest
 
@@ -20,10 +22,27 @@ def make_settings(tmp_path, **overrides) -> Settings:
     return Settings(**base)
 
 
+FIXTURES = Path(__file__).parent / "fixtures"
+
+
+def load_fixture(name: str) -> dict:
+    return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
+
+
 @pytest.fixture
-def client(tmp_path):
+def empty_client(tmp_path):
     with TestClient(create_app(make_settings(tmp_path))) as c:
         yield c
+
+
+@pytest.fixture
+def client(empty_client):
+    """App with test fixtures (infrastructure + flood zones) imported via the API."""
+    r = empty_client.post("/api/infrastructure/import", json=load_fixture("infrastructure.geojson"))
+    assert r.status_code == 200, r.text
+    r = empty_client.post("/api/hazards/floods/import", json=load_fixture("flood_zones.geojson"))
+    assert r.status_code == 200, r.text
+    return empty_client
 
 
 @pytest.fixture

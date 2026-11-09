@@ -22,9 +22,11 @@ def health(settings: Settings = Depends(get_settings)) -> dict:
         "version": __version__,
         "offline": settings.offline,
         "connectors": {
-            "usgs": "reference" if settings.offline else "live",
-            "firms": "live" if settings.firms_map_key and not settings.offline else "reference",
+            "usgs": "catalogue" if settings.offline else "live",
+            "firms": "live" if settings.firms_map_key and not settings.offline
+            else ("offline" if settings.offline else "no key"),
             "osrm": "estimate" if settings.offline else "live",
+            "osm": "offline" if settings.offline else "live",
         },
         "default_bbox": DEFAULT_BBOX,
     }

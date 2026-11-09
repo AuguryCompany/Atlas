@@ -10,19 +10,20 @@
 │                                                                                                     │
 │ routers/      platform · infrastructure · hazards · analysis · logistics                            │
 │ services/     hazards (MMI, exposure) · risk (grid) · logistics · imagery (catalogue)               │
-│ connectors/   usgs · firms · osrm   (AUGURY CONNECT — TTL cache, graceful fallback)                 │
+│ connectors/   usgs · firms · overpass (OSM) · osrm  (AUGURY CONNECT — TTL cache, explicit source)   │
 │ geo.py        haversine, geodesic circles, point-in-polygon, bbox                                   │
-│ db.py         SQLite: assets, audit_log                                                             │
-│ data/         reference datasets (infrastructure, earthquakes, fires, flood zones)                  │
+│ db.py         SQLite: assets, hazard_zones, audit_log                                               │
+│ data/         historical earthquake catalogue (the only bundled dataset)                            │
 └─────────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Design principles
 
 1. **Provenance is always visible.** Every hazard response carries `source`
-   (`usgs`, `firms`, `osrm`, `reference`, `estimate`); the UI shows connector mode in the header.
-2. **Degrade, don't fail.** Connectors fall back to bundled reference data or
-   estimates when offline, unkeyed, or the upstream errors. `ATLAS_OFFLINE=1` forces this.
+   (`usgs`, `firms`, `OpenStreetMap`, `catalogue`, `unavailable`, `estimate`); the UI shows connector mode in the header.
+2. **Never fabricate.** No demo or synthetic data ships with Atlas. When a source is offline,
+   unkeyed or failing, its layer is empty and labelled `unavailable`; routing falls back to a
+   clearly-labelled straight-line `estimate`. `ATLAS_OFFLINE=1` disables all external calls.
 3. **Transparent models.** Impact and risk models are simple, documented, and return
    their parameters (model name, weights, formula) with the result.
 4. **Least privilege.** Read endpoints need `viewer`, analysis needs `analyst`,

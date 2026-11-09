@@ -8,9 +8,8 @@ import logging
 
 import httpx
 
-from .. import datasets
 from ..config import Settings
-from ..geo import BBox, in_bbox
+from ..geo import BBox
 from .cache import TTLCache
 
 log = logging.getLogger("atlas.connect.firms")
@@ -18,14 +17,8 @@ _cache = TTLCache(ttl_seconds=900)
 FIRMS_URL = "https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/{sensor}/{area}/{days}"
 
 
-def reference(bbox: BBox | None) -> dict:
-    fc = datasets.load("fires_reference.geojson")
-    if bbox:
-        fc["features"] = [
-            f for f in fc["features"] if in_bbox(*f["geometry"]["coordinates"][:2], bbox)
-        ]
-    fc.pop("metadata", None)
-    return fc
+def empty() -> dict:
+    return {"type": "FeatureCollection", "features": []}
 
 
 def _parse_csv(text: str) -> dict:
@@ -55,8 +48,13 @@ def _parse_csv(text: str) -> dict:
 async def fetch_fires(
     settings: Settings, bbox: BBox, days: int = 2, sensor: str = "VIIRS_SNPP_NRT"
 ) -> tuple[dict, str]:
+    """Return (FeatureCollection, source); source is 'firms' or 'unavailable'.
+
+    There is deliberately no synthetic fallback: without a FIRMS key or
+    connectivity the layer is empty and the source says so.
+    """
     if settings.offline or not settings.firms_map_key:
-        return reference(bbox), "reference"
+        return empty(), "unavailable"
     days = max(1, min(days, 10))
     key = (bbox, days, sensor)
     if (hit := _cache.get(key)) is not None:
@@ -69,7 +67,7 @@ async def fetch_fires(
             resp.raise_for_status()
             fc = _parse_csv(resp.text)
     except httpx.HTTPError as exc:
-        log.warning("FIRMS unavailable (%s); using reference detections", exc)
-        return reference(bbox), "reference"
+        log.warning("FIRMS unavailable (%s)", exc)
+        return empty(), "unavailable"
     _cache.set(key, fc)
     return fc, "firms"

@@ -26,6 +26,7 @@ export interface ImpactResult {
   intensity_rings?: FC;
   model?: string;
   source?: string;
+  zones?: number;
 }
 
 export interface Route {

@@ -6,6 +6,7 @@ export const ASSET_COLORS: Record<string, string> = {
   power_plant: "#ffbe0b",
   energy: "#fb8500",
   hospital: "#2ec4b6",
+  substation: "#e9c46a",
   other: "#adb5bd",
 };
 
@@ -17,6 +18,7 @@ export const ASSET_LABELS: Record<string, string> = {
   power_plant: "Power plant",
   energy: "Energy",
   hospital: "Hospital",
+  substation: "Substation",
   other: "Other",
 };
 

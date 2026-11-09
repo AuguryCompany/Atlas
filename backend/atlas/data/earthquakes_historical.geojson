@@ -1,13 +1,13 @@
 {
  "type": "FeatureCollection",
  "metadata": {
-  "dataset": "earthquakes_reference",
-  "source": "Bundled reference catalogue (offline fallback)"
+  "dataset": "historical_earthquakes",
+  "source": "Major historical earthquakes in and around Türkiye (USGS ComCat parameters, rounded)"
  },
  "features": [
   {
    "type": "Feature",
-   "id": "REF-EQ-01",
+   "id": "HIST-01",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -17,17 +17,17 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-01",
+    "id": "HIST-01",
     "title": "M 7.8 — Pazarcık, Kahramanmaraş",
     "time": "2023-02-06T01:17:34Z",
     "mag": 7.8,
     "depth_km": 10.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   },
   {
    "type": "Feature",
-   "id": "REF-EQ-02",
+   "id": "HIST-02",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -37,17 +37,17 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-02",
+    "id": "HIST-02",
     "title": "M 7.5 — Elbistan, Kahramanmaraş",
     "time": "2023-02-06T10:24:49Z",
     "mag": 7.5,
     "depth_km": 10.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   },
   {
    "type": "Feature",
-   "id": "REF-EQ-03",
+   "id": "HIST-03",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -57,17 +57,17 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-03",
+    "id": "HIST-03",
     "title": "M 6.3 — Defne, Hatay",
     "time": "2023-02-20T17:04:29Z",
     "mag": 6.3,
     "depth_km": 16.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   },
   {
    "type": "Feature",
-   "id": "REF-EQ-04",
+   "id": "HIST-04",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -77,17 +77,17 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-04",
+    "id": "HIST-04",
     "title": "M 7.6 — İzmit, Kocaeli",
     "time": "1999-08-17T00:01:39Z",
     "mag": 7.6,
     "depth_km": 17.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   },
   {
    "type": "Feature",
-   "id": "REF-EQ-05",
+   "id": "HIST-05",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -97,17 +97,17 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-05",
+    "id": "HIST-05",
     "title": "M 7.2 — Düzce",
     "time": "1999-11-12T16:57:19Z",
     "mag": 7.2,
     "depth_km": 10.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   },
   {
    "type": "Feature",
-   "id": "REF-EQ-06",
+   "id": "HIST-06",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -117,17 +117,17 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-06",
+    "id": "HIST-06",
     "title": "M 7.1 — Van",
     "time": "2011-10-23T10:41:23Z",
     "mag": 7.1,
     "depth_km": 18.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   },
   {
    "type": "Feature",
-   "id": "REF-EQ-07",
+   "id": "HIST-07",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -137,17 +137,17 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-07",
+    "id": "HIST-07",
     "title": "M 6.7 — Sivrice, Elazığ",
     "time": "2020-01-24T17:55:14Z",
     "mag": 6.7,
     "depth_km": 10.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   },
   {
    "type": "Feature",
-   "id": "REF-EQ-08",
+   "id": "HIST-08",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -157,17 +157,17 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-08",
+    "id": "HIST-08",
     "title": "M 7.0 — Samos / İzmir",
     "time": "2020-10-30T11:51:27Z",
     "mag": 7.0,
     "depth_km": 21.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   },
   {
    "type": "Feature",
-   "id": "REF-EQ-09",
+   "id": "HIST-09",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -177,37 +177,17 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-09",
+    "id": "HIST-09",
     "title": "M 6.1 — Gölyaka, Düzce",
     "time": "2022-11-23T01:08:16Z",
     "mag": 6.1,
     "depth_km": 10.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   },
   {
    "type": "Feature",
-   "id": "REF-EQ-10",
-   "geometry": {
-    "type": "Point",
-    "coordinates": [
-     37.96,
-     38.25,
-     10.0
-    ]
-   },
-   "properties": {
-    "id": "REF-EQ-10",
-    "title": "M 5.6 — Yeşilyurt, Malatya",
-    "time": "2023-08-10T14:15:00Z",
-    "mag": 5.6,
-    "depth_km": 10.0,
-    "source": "reference"
-   }
-  },
-  {
-   "type": "Feature",
-   "id": "REF-EQ-11",
+   "id": "HIST-10",
    "geometry": {
     "type": "Point",
     "coordinates": [
@@ -217,12 +197,12 @@
     ]
    },
    "properties": {
-    "id": "REF-EQ-11",
+    "id": "HIST-10",
     "title": "M 6.2 — Silivri, Marmara Sea",
     "time": "2025-04-23T09:49:00Z",
     "mag": 6.2,
     "depth_km": 10.0,
-    "source": "reference"
+    "source": "catalogue"
    }
   }
  ]

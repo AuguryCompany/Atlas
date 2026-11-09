@@ -88,10 +88,10 @@ export function installLayers(map: maplibregl.Map): void {
   map.addLayer({
     id: "quakes-circle", type: "circle", source: "quakes",
     paint: {
-      "circle-color": ["case", ["==", ["get", "source"], "reference"], "#f72585", "#ff9e00"],
+      "circle-color": ["case", ["==", ["get", "source"], "catalogue"], "#f72585", "#ff9e00"],
       "circle-radius": ["interpolate", ["exponential", 1.6], ["coalesce", ["get", "mag"], 4], 3, 2, 5, 5, 6, 9, 7, 15, 8, 24],
       "circle-opacity": 0.45,
-      "circle-stroke-color": ["case", ["==", ["get", "source"], "reference"], "#f72585", "#ff9e00"],
+      "circle-stroke-color": ["case", ["==", ["get", "source"], "catalogue"], "#f72585", "#ff9e00"],
       "circle-stroke-width": 1.2,
     },
   });

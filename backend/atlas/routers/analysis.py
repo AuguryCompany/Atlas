@@ -7,7 +7,6 @@ from datetime import date
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, Field
 
-from .. import datasets
 from ..config import Settings
 from ..connectors import firms, usgs
 from ..db import Database
@@ -50,8 +49,7 @@ async def wildfire_exposure(
 
 @router.get("/flood", dependencies=[Depends(require("analyst"))])
 def flood_exposure(types: str | None = None, db: Database = Depends(get_db)) -> dict:
-    zones = datasets.load("flood_zones.geojson")["features"]
-    return hazards.flood_exposure(db.list_assets(csv_list(types)), zones)
+    return hazards.flood_exposure(db.list_assets(csv_list(types)), db.list_zones("flood"))
 
 
 @router.get("/risk-grid", dependencies=[Depends(require("analyst"))])
@@ -70,13 +68,15 @@ async def risk_grid(
     area = bbox_param(bbox)
     start, end = date_range(start, end)
     quakes, eq_source = await usgs.fetch_earthquakes(settings, area, start, end, min_mag)
-    # Always fold in the reference catalogue so major historical events count.
-    ref = usgs.reference(area, None, None, min_mag)["features"]
+    # Always fold in the historical catalogue so major past events count.
+    hist = usgs.historical(area, None, None, min_mag)["features"]
+    seen = {f["id"] for f in quakes["features"]}
+    hist = [f for f in hist if f["id"] not in seen]
     fires, fire_source = await firms.fetch_fires(settings, area, 7)
     try:
         grid = risk.compute_grid(
-            area, cell_deg, db.list_assets(), quakes["features"] + ref, fires["features"],
-            datasets.load("flood_zones.geojson")["features"],
+            area, cell_deg, db.list_assets(), quakes["features"] + hist, fires["features"],
+            db.list_zones("flood"),
             {"seismic": w_seismic, "wildfire": w_wildfire, "flood": w_flood},
         )
     except ValueError as exc:
