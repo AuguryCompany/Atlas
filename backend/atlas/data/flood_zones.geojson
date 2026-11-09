@@ -1,0 +1,267 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "dataset": "flood_zones",
+  "note": "Illustrative flood-prone areas for demonstration. Not an official hazard map."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "id": "FZ-BOZ",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       33.98,
+       41.93
+      ],
+      [
+       34.05,
+       41.97
+      ],
+      [
+       34.06,
+       41.93
+      ],
+      [
+       34.02,
+       41.86
+      ],
+      [
+       33.97,
+       41.88
+      ],
+      [
+       33.98,
+       41.93
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "FZ-BOZ",
+    "name": "Bozkurt / Ezine Çayı",
+    "province": "Kastamonu",
+    "level": "high"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "FZ-BAR",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       32.28,
+       41.66
+      ],
+      [
+       32.4,
+       41.68
+      ],
+      [
+       32.42,
+       41.6
+      ],
+      [
+       32.33,
+       41.57
+      ],
+      [
+       32.27,
+       41.6
+      ],
+      [
+       32.28,
+       41.66
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "FZ-BAR",
+    "name": "Bartın Çayı floodplain",
+    "province": "Bartın",
+    "level": "high"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "FZ-ERG",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       26.55,
+       41.2
+      ],
+      [
+       27.1,
+       41.3
+      ],
+      [
+       27.6,
+       41.25
+      ],
+      [
+       27.55,
+       41.1
+      ],
+      [
+       26.9,
+       41.08
+      ],
+      [
+       26.5,
+       41.1
+      ],
+      [
+       26.55,
+       41.2
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "FZ-ERG",
+    "name": "Ergene river basin",
+    "province": "Edirne / Tekirdağ",
+    "level": "medium"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "FZ-RIZ",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       40.4,
+       41.05
+      ],
+      [
+       40.7,
+       41.1
+      ],
+      [
+       40.85,
+       41.02
+      ],
+      [
+       40.6,
+       40.95
+      ],
+      [
+       40.38,
+       40.98
+      ],
+      [
+       40.4,
+       41.05
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "FZ-RIZ",
+    "name": "Rize coastal streams",
+    "province": "Rize",
+    "level": "high"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "FZ-CUK",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       35.1,
+       36.9
+      ],
+      [
+       35.22,
+       37.08
+      ],
+      [
+       35.45,
+       37.08
+      ],
+      [
+       35.6,
+       36.95
+      ],
+      [
+       35.95,
+       36.8
+      ],
+      [
+       35.7,
+       36.62
+      ],
+      [
+       35.2,
+       36.7
+      ],
+      [
+       35.1,
+       36.9
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "FZ-CUK",
+    "name": "Lower Seyhan / Ceyhan (Çukurova)",
+    "province": "Adana",
+    "level": "medium"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "FZ-IZM",
+   "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+     [
+      [
+       26.75,
+       38.62
+      ],
+      [
+       27.0,
+       38.65
+      ],
+      [
+       27.1,
+       38.55
+      ],
+      [
+       26.9,
+       38.5
+      ],
+      [
+       26.72,
+       38.55
+      ],
+      [
+       26.75,
+       38.62
+      ]
+     ]
+    ]
+   },
+   "properties": {
+    "id": "FZ-IZM",
+    "name": "Gediz delta",
+    "province": "İzmir / Manisa",
+    "level": "medium"
+   }
+  }
+ ]
+}

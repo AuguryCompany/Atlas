@@ -1,0 +1,749 @@
+{
+ "type": "FeatureCollection",
+ "metadata": {
+  "dataset": "critical_infrastructure",
+  "note": "Demonstration dataset with approximate public coordinates. Replace with authoritative inventory via /api/infrastructure/import."
+ },
+ "features": [
+  {
+   "type": "Feature",
+   "id": "AP-IST",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     28.7519,
+     41.2753
+    ]
+   },
+   "properties": {
+    "id": "AP-IST",
+    "name": "Istanbul Airport",
+    "type": "airport",
+    "province": "İstanbul",
+    "criticality": 5,
+    "capacity": "~90M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-SAW",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     29.3092,
+     40.8986
+    ]
+   },
+   "properties": {
+    "id": "AP-SAW",
+    "name": "Sabiha Gökçen Airport",
+    "type": "airport",
+    "province": "İstanbul",
+    "criticality": 5,
+    "capacity": "~40M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-ESB",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     32.9951,
+     40.1281
+    ]
+   },
+   "properties": {
+    "id": "AP-ESB",
+    "name": "Ankara Esenboğa Airport",
+    "type": "airport",
+    "province": "Ankara",
+    "criticality": 5,
+    "capacity": "~15M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-ADB",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     27.157,
+     38.2924
+    ]
+   },
+   "properties": {
+    "id": "AP-ADB",
+    "name": "İzmir Adnan Menderes Airport",
+    "type": "airport",
+    "province": "İzmir",
+    "criticality": 4,
+    "capacity": "~12M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-AYT",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     30.8005,
+     36.8987
+    ]
+   },
+   "properties": {
+    "id": "AP-AYT",
+    "name": "Antalya Airport",
+    "type": "airport",
+    "province": "Antalya",
+    "criticality": 5,
+    "capacity": "~35M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-ADA",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     35.2804,
+     36.9822
+    ]
+   },
+   "properties": {
+    "id": "AP-ADA",
+    "name": "Adana Şakirpaşa Airport",
+    "type": "airport",
+    "province": "Adana",
+    "criticality": 3,
+    "capacity": "~6M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-TZX",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     39.7897,
+     40.9951
+    ]
+   },
+   "properties": {
+    "id": "AP-TZX",
+    "name": "Trabzon Airport",
+    "type": "airport",
+    "province": "Trabzon",
+    "criticality": 3,
+    "capacity": "~3M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-HTY",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     36.2823,
+     36.3628
+    ]
+   },
+   "properties": {
+    "id": "AP-HTY",
+    "name": "Hatay Airport",
+    "type": "airport",
+    "province": "Hatay",
+    "criticality": 3,
+    "capacity": "~1.5M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-GZT",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     37.4787,
+     36.9472
+    ]
+   },
+   "properties": {
+    "id": "AP-GZT",
+    "name": "Gaziantep Airport",
+    "type": "airport",
+    "province": "Gaziantep",
+    "criticality": 3,
+    "capacity": "~3M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-ERZ",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     41.1702,
+     39.9565
+    ]
+   },
+   "properties": {
+    "id": "AP-ERZ",
+    "name": "Erzurum Airport",
+    "type": "airport",
+    "province": "Erzurum",
+    "criticality": 3,
+    "capacity": "~1.5M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "AP-VAN",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     43.3323,
+     38.4682
+    ]
+   },
+   "properties": {
+    "id": "AP-VAN",
+    "name": "Van Ferit Melen Airport",
+    "type": "airport",
+    "province": "Van",
+    "criticality": 3,
+    "capacity": "~2M pax/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "PT-AMB",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     28.69,
+     40.97
+    ]
+   },
+   "properties": {
+    "id": "PT-AMB",
+    "name": "Ambarlı Port",
+    "type": "port",
+    "province": "İstanbul",
+    "criticality": 5,
+    "capacity": "~3M TEU/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "PT-MER",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     34.64,
+     36.795
+    ]
+   },
+   "properties": {
+    "id": "PT-MER",
+    "name": "Mersin International Port",
+    "type": "port",
+    "province": "Mersin",
+    "criticality": 5,
+    "capacity": "~2M TEU/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "PT-IZM",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     27.145,
+     38.444
+    ]
+   },
+   "properties": {
+    "id": "PT-IZM",
+    "name": "İzmir Alsancak Port",
+    "type": "port",
+    "province": "İzmir",
+    "criticality": 4,
+    "capacity": "~1M TEU/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "PT-ISK",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     36.18,
+     36.59
+    ]
+   },
+   "properties": {
+    "id": "PT-ISK",
+    "name": "İskenderun Port",
+    "type": "port",
+    "province": "Hatay",
+    "criticality": 4,
+    "capacity": "bulk & container",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "PT-SAM",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     36.34,
+     41.3
+    ]
+   },
+   "properties": {
+    "id": "PT-SAM",
+    "name": "Samsun Port",
+    "type": "port",
+    "province": "Samsun",
+    "criticality": 3,
+    "capacity": "general cargo",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "PT-CEY",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     35.93,
+     36.88
+    ]
+   },
+   "properties": {
+    "id": "PT-CEY",
+    "name": "Ceyhan Oil Terminal",
+    "type": "energy",
+    "province": "Adana",
+    "criticality": 5,
+    "capacity": "crude export terminal",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "EN-ATA",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     38.3178,
+     37.4836
+    ]
+   },
+   "properties": {
+    "id": "EN-ATA",
+    "name": "Atatürk Dam & HPP",
+    "type": "dam",
+    "province": "Şanlıurfa",
+    "criticality": 5,
+    "capacity": "2400 MW",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "EN-KEB",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     38.7553,
+     38.8076
+    ]
+   },
+   "properties": {
+    "id": "EN-KEB",
+    "name": "Keban Dam & HPP",
+    "type": "dam",
+    "province": "Elazığ",
+    "criticality": 5,
+    "capacity": "1330 MW",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "EN-BIR",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     37.98,
+     37.03
+    ]
+   },
+   "properties": {
+    "id": "EN-BIR",
+    "name": "Birecik Dam & HPP",
+    "type": "dam",
+    "province": "Şanlıurfa",
+    "criticality": 4,
+    "capacity": "672 MW",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "EN-ILI",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     41.85,
+     37.53
+    ]
+   },
+   "properties": {
+    "id": "EN-ILI",
+    "name": "Ilısu Dam & HPP",
+    "type": "dam",
+    "province": "Mardin",
+    "criticality": 4,
+    "capacity": "1200 MW",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "EN-AKK",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     33.541,
+     36.144
+    ]
+   },
+   "properties": {
+    "id": "EN-AKK",
+    "name": "Akkuyu Nuclear Power Plant",
+    "type": "power_plant",
+    "province": "Mersin",
+    "criticality": 5,
+    "capacity": "4800 MW (planned)",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "EN-AFS",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     36.98,
+     38.34
+    ]
+   },
+   "properties": {
+    "id": "EN-AFS",
+    "name": "Afşin-Elbistan Thermal Complex",
+    "type": "power_plant",
+    "province": "Kahramanmaraş",
+    "criticality": 4,
+    "capacity": "~2800 MW",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "EN-TUP",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     29.82,
+     40.76
+    ]
+   },
+   "properties": {
+    "id": "EN-TUP",
+    "name": "Tüpraş İzmit Refinery",
+    "type": "energy",
+    "province": "Kocaeli",
+    "criticality": 5,
+    "capacity": "11M t/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "EN-STR",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.95,
+     38.8
+    ]
+   },
+   "properties": {
+    "id": "EN-STR",
+    "name": "STAR Refinery Aliağa",
+    "type": "energy",
+    "province": "İzmir",
+    "criticality": 4,
+    "capacity": "10M t/yr",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "HS-ANK",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     32.748,
+     39.889
+    ]
+   },
+   "properties": {
+    "id": "HS-ANK",
+    "name": "Ankara Bilkent City Hospital",
+    "type": "hospital",
+    "province": "Ankara",
+    "criticality": 5,
+    "capacity": "~3700 beds",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "HS-IST",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     28.79,
+     41.105
+    ]
+   },
+   "properties": {
+    "id": "HS-IST",
+    "name": "Başakşehir Çam ve Sakura City Hospital",
+    "type": "hospital",
+    "province": "İstanbul",
+    "criticality": 5,
+    "capacity": "~2600 beds",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "HS-IZM",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     27.21,
+     38.45
+    ]
+   },
+   "properties": {
+    "id": "HS-IZM",
+    "name": "İzmir City Hospital",
+    "type": "hospital",
+    "province": "İzmir",
+    "criticality": 4,
+    "capacity": "~2000 beds",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "HS-ADA",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     35.3,
+     37.05
+    ]
+   },
+   "properties": {
+    "id": "HS-ADA",
+    "name": "Adana City Hospital",
+    "type": "hospital",
+    "province": "Adana",
+    "criticality": 4,
+    "capacity": "~1500 beds",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "HS-KOC",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     29.95,
+     40.79
+    ]
+   },
+   "properties": {
+    "id": "HS-KOC",
+    "name": "Kocaeli City Hospital",
+    "type": "hospital",
+    "province": "Kocaeli",
+    "criticality": 4,
+    "capacity": "~1200 beds",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "HS-GZT",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     37.35,
+     37.03
+    ]
+   },
+   "properties": {
+    "id": "HS-GZT",
+    "name": "Gaziantep City Hospital",
+    "type": "hospital",
+    "province": "Gaziantep",
+    "criticality": 4,
+    "capacity": "~1800 beds",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "HS-ELZ",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     39.19,
+     38.66
+    ]
+   },
+   "properties": {
+    "id": "HS-ELZ",
+    "name": "Elazığ City Hospital",
+    "type": "hospital",
+    "province": "Elazığ",
+    "criticality": 3,
+    "capacity": "~1000 beds",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "BR-15T",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     29.034,
+     41.045
+    ]
+   },
+   "properties": {
+    "id": "BR-15T",
+    "name": "15 Temmuz Şehitler Bridge",
+    "type": "bridge",
+    "province": "İstanbul",
+    "criticality": 5,
+    "capacity": "Bosphorus crossing",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "BR-FSM",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     29.061,
+     41.091
+    ]
+   },
+   "properties": {
+    "id": "BR-FSM",
+    "name": "Fatih Sultan Mehmet Bridge",
+    "type": "bridge",
+    "province": "İstanbul",
+    "criticality": 5,
+    "capacity": "Bosphorus crossing",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "BR-YSS",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     29.111,
+     41.203
+    ]
+   },
+   "properties": {
+    "id": "BR-YSS",
+    "name": "Yavuz Sultan Selim Bridge",
+    "type": "bridge",
+    "province": "İstanbul",
+    "criticality": 5,
+    "capacity": "Bosphorus crossing",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "BR-OSG",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     29.515,
+     40.753
+    ]
+   },
+   "properties": {
+    "id": "BR-OSG",
+    "name": "Osmangazi Bridge",
+    "type": "bridge",
+    "province": "Kocaeli",
+    "criticality": 4,
+    "capacity": "İzmit Bay crossing",
+    "status": "operational"
+   }
+  },
+  {
+   "type": "Feature",
+   "id": "BR-CNK",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     26.635,
+     40.336
+    ]
+   },
+   "properties": {
+    "id": "BR-CNK",
+    "name": "1915 Çanakkale Bridge",
+    "type": "bridge",
+    "province": "Çanakkale",
+    "criticality": 4,
+    "capacity": "Dardanelles crossing",
+    "status": "operational"
+   }
+  }
+ ]
+}
